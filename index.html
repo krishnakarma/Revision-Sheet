@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karma Sheet - Built by Krishna Karma</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #090d16;
+    --surface: #111827;
+    --surface2: #1f293d;
+    --surface3: #2d3b55;
+    --border: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(56, 189, 248, 0.25);
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --accent3: #fbbf24;
+    --hard: #f87171;
+    --med: #38bdf8;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --todo: #64748b;
+    --done: #34d399;
+    --revise: #fbbf24;
+    --glow: rgba(56, 189, 248, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(9, 13, 22, 0.95) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .brand-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .author-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .author-tag .name {
+    color: var(--accent);
+  }
+  .author-tag .email {
+    color: var(--accent2);
+    text-transform: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    background: rgba(129, 140, 248, 0.06);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(129, 140, 248, 0.15);
+  }
+  .header-stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .stat-pill .num { font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px;}
+  .stat-pill .num.hard { color: var(--hard); }
+  .stat-pill .num.med { color: var(--med); }
+  .stat-pill .num.done-c { color: var(--green); }
+  .stat-pill .num.rev-c { color: var(--revise); }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 12px 40px 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(17, 24, 39, 0.4);
+    overflow-x: auto;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 12px 24px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    border: 1px solid transparent;
+    border-bottom: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tab:hover { color: var(--text); background: rgba(255,255,255,0.02); }
+  .tab.active {
+    color: var(--text);
+    background: var(--surface);
+    border-color: var(--border);
+    border-bottom: 2px solid var(--bg);
+    margin-bottom: -1px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .tab.active.all-tab { border-top: 3px solid var(--accent3); color: var(--accent3); }
+  .tab.active.med-tab { border-top: 3px solid var(--med); color: var(--med); }
+  .tab.active.hard-tab { border-top: 3px solid var(--hard); color: var(--hard); }
+  .tab.active.ds-tab { border-top: 3px solid var(--accent2); color: var(--accent2); }
+
+  /* MAIN CONTENT */
+  .main { padding: 32px 40px; max-width: 1600px; margin: 0 auto; }
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* FILTERS & TOOLBAR */
+  .filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: var(--surface);
+    padding: 12px 20px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+  }
+  .filter-label { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .filter-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
+  .filter-btn.active { background: var(--surface3); color: var(--text); border-color: var(--accent); box-shadow: 0 0 12px var(--glow); }
+  .filter-btn.f-todo.active { border-color: var(--todo); color: #fff; background: var(--todo); }
+  .filter-btn.f-done.active { border-color: var(--done); color: #bg; background: var(--done); }
+  .filter-btn.f-revise.active { border-color: var(--revise); color: #bg; background: var(--revise); }
+  
+  .search-wrapper { position: relative; margin-left: auto; }
+  @media (max-width: 768px) { .search-wrapper { margin-left: 0; width: 100%; } }
+  .search-input {
+    padding: 8px 16px 8px 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    width: 280px;
+    transition: all 0.2s;
+  }
+  @media (max-width: 768px) { .search-input { width: 100%; } }
+  .search-input:focus { border-color: var(--accent); background: var(--surface3); box-shadow: 0 0 12px var(--glow); }
+  .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; pointer-events: none; }
+
+  /* PATTERN ENGINE CONTAINER */
+  .pattern-group {
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .pattern-group:hover { border-color: rgba(255,255,255,0.12); }
+  .pattern-header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    background: linear-gradient(90deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0) 100%);
+  }
+  .pattern-header:hover { background: rgba(255,255,255,0.02); }
+  .pattern-name {
+    font-size: 16px;
+    font-weight: 700;
+    flex: 1;
+    color: var(--text);
+  }
+  .pattern-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .progress-wrap { display: flex; align-items: center; gap: 12px; }
+  .progress-bar { width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.4s ease; }
+  .progress-text { font-size: 12px; font-weight: 700; color: var(--muted); min-width: 45px; font-family: 'JetBrains Mono', monospace; text-align: right; }
+  .chevron { font-size: 16px; color: var(--muted); transition: transform 0.2s ease; }
+  .pattern-group.collapsed .chevron { transform: rotate(-90deg); }
+  .problem-list { display: none; border-top: 1px solid var(--border); background: #0d1321; }
+  .pattern-group:not(.collapsed) .problem-list { display: block; }
+
+  /* PROBLEM ROWS */
+  .problem-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px 110px 180px;
+    align-items: center;
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    gap: 16px;
+    transition: background 0.15s;
+  }
+  .problem-row:last-child { border-bottom: none; }
+  .problem-row:hover { background: rgba(255,255,255,0.02); }
+  .prob-num { font-size: 13px; color: var(--muted); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+  .prob-name { font-size: 14px; font-weight: 500; text-decoration: none; color: var(--text); transition: color 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prob-name:hover { color: var(--accent); }
+  .prob-diff { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 8px; text-align: center; letter-spacing: 0.03em; text-transform: uppercase; width: fit-content; }
+  .prob-diff.Hard { background: rgba(248,113,113,0.12); color: var(--hard); border: 1px solid rgba(248,113,113,0.2); }
+  .prob-diff.Med { background: rgba(56,189,248,0.12); color: var(--med); border: 1px solid rgba(56,189,248,0.2); }
+  .prob-rate { font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  /* CONTROLS MATRIX */
+  .status-btns { display: flex; gap: 6px; }
+  .status-btn {
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .status-btn:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
+  .status-btn.active-todo { background: rgba(100,116,139,0.15); border-color: var(--todo); color: var(--todo); }
+  .status-btn.active-done { background: rgba(52,211,153,0.15); border-color: var(--done); color: var(--done); }
+  .status-btn.active-revise { background: rgba(251,191,36,0.15); border-color: var(--revise); color: var(--revise); }
+
+  /* OVERVIEW CORE COMPONENT */
+  .overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
+  .ov-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  .ov-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: transparent; }
+  .ov-num { font-size: 40px; font-weight: 800; font-family: 'JetBrains Mono', monospace; line-height: 1; }
+  .ov-label { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  
+  .ov-card.med-card::before { background: var(--med); }
+  .ov-card.med-card .ov-num { color: var(--med); }
+  .ov-card.hard-card::before { background: var(--hard); }
+  .ov-card.hard-card .ov-num { color: var(--hard); }
+  .ov-card.done-card::before { background: var(--green); }
+  .ov-card.done-card .ov-num { color: var(--green); }
+  .ov-card.revise-card::before { background: var(--yellow); }
+  .ov-card.revise-card .ov-num { color: var(--yellow); }
+  .ov-card.todo-card::before { background: var(--accent2); }
+  .ov-card.todo-card .ov-num { color: var(--accent2); }
+
+  /* PROGRESS VISUALIZER METRICS */
+  .section-subtitle { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .progress-row-summary {
+    display: grid;
+    grid-template-columns: 240px 1fr 60px 60px;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+  }
+  .progress-row-summary:hover { transform: translateX(4px); border-color: rgba(255,255,255,0.08); }
+  .prs-title { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prs-track { background: rgba(255,255,255,0.05); border-radius: 4px; height: 8px; overflow: hidden; }
+  .prs-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; transition: width 0.4s ease; }
+  .prs-counts { font-size: 13px; font-weight: 600; color: var(--muted); font-family: 'JetBrains Mono', monospace; text-align: right; }
+  .prs-pct { font-size: 13px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; text-align: right; }
+
+  /* COMPACT DATA STRUCTURE MATRIX VIEW */
+  .ds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 24px; }
+  @media (max-width: 480px) { .ds-grid { grid-template-columns: 1fr; } }
+  .ds-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .ds-card-header { padding: 16px 20px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .ds-icon { font-size: 18px; opacity: 0.8; }
+  .ds-title { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; }
+  .ds-count { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--surface2); padding: 4px 10px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; }
+  .ds-list { padding: 0; max-height: 320px; overflow-y: auto; }
+  .ds-list::-webkit-scrollbar { width: 4px; }
+  .ds-list::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
+  .ds-problem { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.02); gap: 12px; text-decoration: none; color: var(--text); transition: background 0.15s; }
+  .ds-problem:last-child { border-bottom: none; }
+  .ds-problem:hover { background: rgba(255,255,255,0.01); }
+  .ds-prob-num { font-size: 12px; color: var(--muted); min-width: 40px; font-family: 'JetBrains Mono', monospace; }
+  .ds-prob-name { font-size: 13px; font-weight: 500; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ds-prob-diff { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+  .ds-prob-diff.Hard { background: rgba(248,113,113,0.1); color: var(--hard); }
+  .ds-prob-diff.Med { background: rgba(56,189,248,0.1); color: var(--med); }
+
+  /* UTILITY FRAMES */
+  .empty-state { text-align: center; padding: 48px 24px; color: var(--muted); background: rgba(255,255,255,0.01); border-radius: 16px; border: 1px dashed var(--border); }
+  .empty-state .e-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+  
+  /* SCROLLBAR CONFIGURATION */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--surface3); }
+
+  @media (max-width: 900px) {
+    .header { padding: 16px 24px; }
+    .main { padding: 24px; }
+    .tabs { padding: 12px 24px 0; }
+    .problem-row { grid-template-columns: 60px 1fr 90px; }
+    .prob-rate, .status-btns { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand-group">
+    <div class="logo">⚡ Karma Sheet</div>
+    <div class="author-tag">
+      <span>Built by <span class="name">Krishna Karma</span></span>
+      <span class="email">karmakrishna1704@gmail.com</span>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="stat-pill"><span class="num med">507</span> Medium</div>
+    <div class="stat-pill"><span class="num hard">101</span> Hard</div>
+    <div class="stat-pill"><span class="num done-c" id="globalDone">0</span> Done</div>
+    <div class="stat-pill"><span class="num rev-c" id="globalRevise">0</span> Revise</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab all-tab active" onclick="showTab('all')">📊 Overview</div>
+  <div class="tab med-tab" onclick="showTab('medium')">🔵 Medium Patterns</div>
+  <div class="tab hard-tab" onclick="showTab('hard')">🔴 Hard Patterns</div>
+  <div class="tab ds-tab" onclick="showTab('ds')">🗂️ By Data Structure</div>
+</div>
+
+<div class="main">
+
+<div id="tab-all" class="section active">
+  <div class="overview-grid">
+    <div class="ov-card med-card"><div class="ov-num">507</div><div class="ov-label">Medium Patterns</div></div>
+    <div class="ov-card hard-card"><div class="ov-num">101</div><div class="ov-label">Hard Patterns</div></div>
+    <div class="ov-card done-card"><div class="ov-num" id="ov-done">0</div><div class="ov-label">Marked Done</div></div>
+    <div class="ov-card revise-card"><div class="ov-num" id="ov-revise">0</div><div class="ov-label">To Revise</div></div>
+    <div class="ov-card todo-card"><div class="ov-num" id="ov-todo">608</div><div class="ov-label">Todo Remaining</div></div>
+  </div>
+  <div class="section-subtitle">⚡ Pattern Blueprint Coverage Matrix</div>
+  <div id="pattern-summary"></div>
+</div>
+
+<div id="tab-medium" class="section">
+  <div class="filters">
+    <span class="filter-label">Filter Matrix:</span>
+    <button class="filter-btn active" onclick="filterProblems('medium','all',this)">All</button>
+    <button class="filter-btn f-todo" onclick="filterProblems('medium','todo',this)">Todo</button>
+    <button class="filter-btn f-done" onclick="filterProblems('medium','done',this)">Done</button>
+    <button class="filter-btn f-revise" onclick="filterProblems('medium','revise',this)">Revise</button>
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" placeholder="Search strategy blueprints..." oninput="searchProblems('medium', this.value)">
+    </div>
+  </div>
+  <div id="medium-patterns"></div>
+</div>
+
+<div id="tab-hard" class="section">
+  <div class="filters">
+    <span class="filter-label">Filter Matrix:</span>
+    <button class="filter-btn active" onclick="filterProblems('hard','all',this)">All</button>
+    <button class="filter-btn f-todo" onclick="filterProblems('hard','todo',this)">Todo</button>
+    <button class="filter-btn f-done" onclick="filterProblems('hard','done',this)">Done</button>
+    <button class="filter-btn f-revise" onclick="filterProblems('hard','revise',this)">Revise</button>
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" placeholder="Search strategy blueprints..." oninput="searchProblems('hard', this.value)">
+    </div>
+  </div>
+  <div id="hard-patterns"></div>
+</div>
+
+<div id="tab-ds" class="section">
+  <div class="filters">
+    <span class="filter-label">Difficulty Filter:</span>
+    <button class="filter-btn active" onclick="filterDS('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDS('Med',this)" style="color:var(--med)">Medium</button>
+    <button class="filter-btn" onclick="filterDS('Hard',this)" style="color:var(--hard)">Hard</button>
+  </div>
+  <div id="ds-grid" class="ds-grid"></div>
+</div>
+
+</div>
+
+<script>
+// ===================== DATA =====================
+const PROBLEMS = {
+medium: [
+  // ARRAYS & HASHING
+  {n:49,t:"Group Anagrams",r:"72.7%",p:["Arrays & Hashing"]},
+  {n:128,t:"Longest Consecutive Sequence",r:"47.1%",p:["Arrays & Hashing","Union Find"]},
+  {n:238,t:"Product of Array Except Self",r:"68.9%",p:["Arrays & Hashing","Prefix Sum"]},
+  {n:347,t:"Top K Frequent Elements",r:"66.5%",p:["Arrays & Hashing","Heap"]},
+  {n:380,t:"Insert Delete GetRandom O(1)",r:"55.4%",p:["Arrays & Hashing","Design"]},
+  {n:560,t:"Subarray Sum Equals K",r:"47.4%",p:["Arrays & Hashing","Prefix Sum"]},
+  {n:525,t:"Contiguous Array",r:"51.4%",p:["Arrays & Hashing","Prefix Sum"]},
+  {n:523,t:"Continuous Subarray Sum",r:"31.4%",p:["Arrays & Hashing","Prefix Sum"]},
+  {n:2364,t:"Count Number of Bad Pairs",r:"54.2%",p:["Arrays & Hashing"]},
+  {n:2657,t:"Find the Prefix Common Array of Two Arrays",r:"88.3%",p:["Arrays & Hashing"]},
+
+  // TWO POINTERS
+  {n:15,t:"3Sum",r:"39.2%",p:["Two Pointers"]},
+  {n:16,t:"3Sum Closest",r:"48.6%",p:["Two Pointers"]},
+  {n:18,t:"4Sum",r:"40.7%",p:["Two Pointers"]},
+  {n:11,t:"Container With Most Water",r:"60.1%",p:["Two Pointers","Greedy"]},
+  {n:167,t:"Two Sum II - Input Array Is Sorted",r:"65.2%",p:["Two Pointers","Binary Search"]},
+  {n:75,t:"Sort Colors",r:"69.7%",p:["Two Pointers"]},
+  {n:80,t:"Remove Duplicates from Sorted Array II",r:"64.8%",p:["Two Pointers"]},
+  {n:611,t:"Valid Triangle Number",r:"56.9%",p:["Two Pointers","Sorting"]},
+  {n:986,t:"Interval List Intersections",r:"71.8%",p:["Two Pointers","Intervals"]},
+
+  // SLIDING WINDOW
+  {n:3,t:"Longest Substring Without Repeating Characters",r:"39.1%",p:["Sliding Window"]},
+  {n:209,t:"Minimum Size Subarray Sum",r:"51.8%",p:["Sliding Window","Binary Search"]},
+  {n:567,t:"Permutation in String",r:"49.0%",p:["Sliding Window"]},
+  {n:424,t:"Longest Repeating Character Replacement",r:"59.7%",p:["Sliding Window"]},
+  {n:713,t:"Subarray Product Less Than K",r:"54.4%",p:["Sliding Window"]},
+  {n:904,t:"Fruit Into Baskets",r:"51.2%",p:["Sliding Window"]},
+  {n:1004,t:"Max Consecutive Ones III",r:"67.8%",p:["Sliding Window"]},
+  {n:1695,t:"Maximum Erasure Value",r:"64.3%",p:["Sliding Window"]},
+  {n:930,t:"Binary Subarrays With Sum",r:"68.9%",p:["Sliding Window","Prefix Sum"]},
+  {n:2799,t:"Count Complete Subarrays in an Array",r:"76.0%",p:["Sliding Window"]},
+  {n:2845,t:"Count of Interesting Subarrays",r:"58.0%",p:["Sliding Window","Prefix Sum"]},
+  {n:3306,t:"Count of Substrings Containing Every Vowel and K Consonants II",r:"40.6%",p:["Sliding Window"]},
+  {n:2470,t:"Number of Subarrays With LCM Equal to K",r:"45.6%",p:["Sliding Window"]},
+
+  // STACK
+  {n:739,t:"Daily Temperatures",r:"68.7%",p:["Stack","Monotonic Stack"]},
+  {n:503,t:"Next Greater Element II",r:"68.4%",p:["Stack","Monotonic Stack"]},
+  {n:155,t:"Min Stack",r:"58.2%",p:["Stack","Design"]},
+  {n:150,t:"Evaluate Reverse Polish Notation",r:"57.8%",p:["Stack"]},
+  {n:71,t:"Simplify Path",r:"50.7%",p:["Stack"]},
+  {n:316,t:"Remove Duplicate Letters",r:"53.3%",p:["Stack","Greedy","Monotonic Stack"]},
+  {n:402,t:"Remove K Digits",r:"36.9%",p:["Stack","Greedy","Monotonic Stack"]},
+  {n:1081,t:"Smallest Subsequence of Distinct Characters",r:"63.5%",p:["Stack","Greedy"]},
+  {n:227,t:"Basic Calculator II",r:"46.9%",p:["Stack"]},
+
+  // BINARY SEARCH
+  {n:33,t:"Search in Rotated Sorted Array",r:"45.0%",p:["Binary Search"]},
+  {n:34,t:"Find First and Last Position of Element in Sorted Array",r:"49.0%",p:["Binary Search"]},
+  {n:74,t:"Search a 2D Matrix",r:"54.0%",p:["Binary Search"]},
+  {n:81,t:"Search in Rotated Sorted Array II",r:"40.1%",p:["Binary Search"]},
+  {n:153,t:"Find Minimum in Rotated Sorted Array",r:"54.8%",p:["Binary Search"]},
+  {n:162,t:"Find Peak Element",r:"47.0%",p:["Binary Search"]},
+  {n:240,t:"Search a 2D Matrix II",r:"57.3%",p:["Binary Search"]},
+  {n:540,t:"Single Element in a Sorted Array",r:"59.3%",p:["Binary Search"]},
+  {n:875,t:"Koko Eating Bananas",r:"50.1%",p:["Binary Search"]},
+  {n:1011,t:"Capacity To Ship Packages Within D Days",r:"74.0%",p:["Binary Search"]},
+  {n:1760,t:"Minimum Limit of Balls in a Bag",r:"66.2%",p:["Binary Search"]},
+  {n:2187,t:"Minimum Time to Complete Trips",r:"39.8%",p:["Binary Search"]},
+  {n:2226,t:"Maximum Candies Allocated to K Children",r:"49.9%",p:["Binary Search"]},
+  {n:2300,t:"Successful Pairs of Spells and Potions",r:"49.6%",p:["Binary Search"]},
+  {n:2594,t:"Minimum Time to Repair Cars",r:"59.5%",p:["Binary Search"]},
+  {n:2616,t:"Minimize the Maximum Difference of Pairs",r:"51.0%",p:["Binary Search","Greedy"]},
+  {n:2560,t:"House Robber IV",r:"64.7%",p:["Binary Search","Dynamic Programming"]},
+  {n:852,t:"Peak Index in a Mountain Array",r:"66.8%",p:["Binary Search"]},
+  {n:1901,t:"Find a Peak Element II",r:"54.8%",p:["Binary Search"]},
+  {n:1855,t:"Maximum Distance Between a Pair of Values",r:"61.4%",p:["Binary Search","Two Pointers"]},
+  {n:275,t:"H-Index II",r:"39.6%",p:["Binary Search"]},
+  {n:1870,t:"Minimum Speed to Arrive on Time",r:"47.9%",p:["Binary Search"]},
+
+  // LINKED LIST
+  {n:2,t:"Add Two Numbers",r:"48.5%",p:["Linked List","Math"]},
+  {n:19,t:"Remove Nth Node From End of List",r:"51.7%",p:["Linked List","Two Pointers"]},
+  {n:24,t:"Swap Nodes in Pairs",r:"69.6%",p:["Linked List"]},
+  {n:61,t:"Rotate List",r:"42.6%",p:["Linked List"]},
+  {n:82,t:"Remove Duplicates from Sorted List II",r:"51.9%",p:["Linked List"]},
+  {n:86,t:"Partition List",r:"61.3%",p:["Linked List"]},
+  {n:92,t:"Reverse Linked List II",r:"51.6%",p:["Linked List"]},
+  {n:138,t:"Copy List with Random Pointer",r:"63.0%",p:["Linked List","Hash Map"]},
+  {n:142,t:"Linked List Cycle II",r:"58.0%",p:["Linked List","Two Pointers"]},
+  {n:143,t:"Reorder List",r:"65.4%",p:["Linked List","Two Pointers","Stack"]},
+  {n:146,t:"LRU Cache",r:"47.4%",p:["Linked List","Design","Hash Map"]},
+  {n:147,t:"Insertion Sort List",r:"59.2%",p:["Linked List","Sorting"]},
+  {n:148,t:"Sort List",r:"64.5%",p:["Linked List","Merge Sort","Divide & Conquer"]},
+  {n:237,t:"Delete Node in a Linked List",r:"83.9%",p:["Linked List"]},
+  {n:328,t:"Odd Even Linked List",r:"62.5%",p:["Linked List"]},
+  {n:707,t:"Design Linked List",r:"30.3%",p:["Linked List","Design"]},
+  {n:2095,t:"Delete the Middle Node of a Linked List",r:"59.6%",p:["Linked List","Two Pointers"]},
+  {n:3217,t:"Delete Nodes From Linked List Present in Array",r:"69.4%",p:["Linked List","Hash Map"]},
+
+  // TREES - BINARY TREE
+  {n:98,t:"Validate Binary Search Tree",r:"35.8%",p:["Trees","DFS"]},
+  {n:99,t:"Recover Binary Search Tree",r:"59.8%",p:["Trees","DFS","Morris Traversal"]},
+  {n:102,t:"Binary Tree Level Order Traversal",r:"72.7%",p:["Trees","BFS"]},
+  {n:103,t:"Binary Tree Zigzag Level Order Traversal",r:"63.8%",p:["Trees","BFS"]},
+  {n:105,t:"Construct Binary Tree from Preorder and Inorder Traversal",r:"68.9%",p:["Trees","DFS","Divide & Conquer"]},
+  {n:106,t:"Construct Binary Tree from Inorder and Postorder Traversal",r:"68.7%",p:["Trees","DFS","Divide & Conquer"]},
+  {n:107,t:"Binary Tree Level Order Traversal II",r:"68.3%",p:["Trees","BFS"]},
+  {n:109,t:"Convert Sorted List to Binary Search Tree",r:"66.7%",p:["Trees","Divide & Conquer","Linked List"]},
+  {n:113,t:"Path Sum II",r:"62.3%",p:["Trees","DFS","Backtracking"]},
+  {n:114,t:"Flatten Binary Tree to Linked List",r:"70.8%",p:["Trees","DFS"]},
+  {n:116,t:"Populating Next Right Pointers in Each Node",r:"67.3%",p:["Trees","BFS"]},
+  {n:117,t:"Populating Next Right Pointers in Each Node II",r:"57.6%",p:["Trees","BFS"]},
+  {n:129,t:"Sum Root to Leaf Numbers",r:"70.0%",p:["Trees","DFS"]},
+  {n:173,t:"Binary Search Tree Iterator",r:"76.5%",p:["Trees","Stack","Design"]},
+  {n:199,t:"Binary Tree Right Side View",r:"70.3%",p:["Trees","BFS","DFS"]},
+  {n:230,t:"Kth Smallest Element in a BST",r:"76.9%",p:["Trees","DFS"]},
+  {n:235,t:"Lowest Common Ancestor of a Binary Search Tree",r:"70.7%",p:["Trees","DFS"]},
+  {n:236,t:"Lowest Common Ancestor of a Binary Tree",r:"69.4%",p:["Trees","DFS"]},
+  {n:437,t:"Path Sum III",r:"46.4%",p:["Trees","DFS","Prefix Sum"]},
+  {n:450,t:"Delete Node in a BST",r:"54.7%",p:["Trees"]},
+  {n:515,t:"Find Largest Value in Each Tree Row",r:"66.3%",p:["Trees","BFS"]},
+  {n:662,t:"Maximum Width of Binary Tree",r:"45.6%",p:["Trees","BFS"]},
+  {n:701,t:"Insert into a Binary Search Tree",r:"73.5%",p:["Trees"]},
+  {n:863,t:"All Nodes Distance K in Binary Tree",r:"67.7%",p:["Trees","BFS","DFS"]},
+  {n:865,t:"Smallest Subtree with all the Deepest Nodes",r:"77.6%",p:["Trees","DFS"]},
+  {n:958,t:"Check Completeness of a Binary Tree",r:"59.2%",p:["Trees","BFS"]},
+  {n:987,t:"Vertical Order Traversal of a Binary Tree",r:"53.8%",p:["Trees","BFS","Sorting"]},
+  {n:1008,t:"Construct Binary Search Tree from Preorder Traversal",r:"84.3%",p:["Trees","DFS"]},
+  {n:1123,t:"Lowest Common Ancestor of Deepest Leaves",r:"79.5%",p:["Trees","DFS"]},
+  {n:1161,t:"Maximum Level Sum of a Binary Tree",r:"70.0%",p:["Trees","BFS"]},
+  {n:1261,t:"Find Elements in a Contaminated Binary Tree",r:"84.1%",p:["Trees","DFS","Hash Map"]},
+  {n:1339,t:"Maximum Product of Splitted Binary Tree",r:"55.7%",p:["Trees","DFS","Prefix Sum"]},
+  {n:1382,t:"Balance a Binary Search Tree",r:"86.3%",p:["Trees","Divide & Conquer"]},
+  {n:1443,t:"Minimum Time to Collect All Apples in a Tree",r:"63.7%",p:["Trees","DFS"]},
+  {n:1457,t:"Pseudo-Palindromic Paths in a Binary Tree",r:"68.4%",p:["Trees","DFS","Bit Manipulation"]},
+  {n:1519,t:"Number of Nodes in the Sub-Tree With the Same Label",r:"55.5%",p:["Trees","DFS"]},
+  {n:2415,t:"Reverse Odd Levels of Binary Tree",r:"86.6%",p:["Trees","DFS","BFS"]},
+  {n:3820,t:"Pythagorean Distance Nodes in a Tree",r:"58.0%",p:["Trees","DFS"]},
+
+  // GRAPHS
+  {n:130,t:"Surrounded Regions",r:"45.4%",p:["Graphs","DFS","BFS","Union Find"]},
+  {n:133,t:"Clone Graph",r:"65.4%",p:["Graphs","DFS","BFS","Hash Map"]},
+  {n:200,t:"Number of Islands",r:"64.5%",p:["Graphs","DFS","BFS","Union Find"]},
+  {n:207,t:"Course Schedule",r:"51.5%",p:["Graphs","Topological Sort","DFS"]},
+  {n:210,t:"Course Schedule II",r:"55.6%",p:["Graphs","Topological Sort","DFS"]},
+  {n:399,t:"Evaluate Division",r:"64.3%",p:["Graphs","BFS","Union Find"]},
+  {n:433,t:"Minimum Genetic Mutation",r:"56.7%",p:["Graphs","BFS"]},
+  {n:547,t:"Number of Provinces",r:"70.5%",p:["Graphs","DFS","Union Find"]},
+  {n:721,t:"Accounts Merge",r:"61.4%",p:["Graphs","Union Find","DFS"]},
+  {n:785,t:"Is Graph Bipartite?",r:"59.3%",p:["Graphs","BFS","DFS","Bipartite"]},
+  {n:787,t:"Cheapest Flights Within K Stops",r:"41.9%",p:["Graphs","Shortest Path","Dynamic Programming"]},
+  {n:797,t:"All Paths From Source to Target",r:"83.6%",p:["Graphs","DFS","Backtracking"]},
+  {n:802,t:"Find Eventual Safe States",r:"70.8%",p:["Graphs","Topological Sort","DFS"]},
+  {n:841,t:"Keys and Rooms",r:"75.8%",p:["Graphs","DFS","BFS"]},
+  {n:947,t:"Most Stones Removed with Same Row or Column",r:"63.0%",p:["Graphs","Union Find"]},
+  {n:990,t:"Satisfiability of Equality Equations",r:"51.9%",p:["Graphs","Union Find"]},
+  {n:994,t:"Rotting Oranges",r:"58.7%",p:["Graphs","BFS"]},
+  {n:1020,t:"Number of Enclaves",r:"71.8%",p:["Graphs","DFS","BFS"]},
+  {n:1091,t:"Shortest Path in Binary Matrix",r:"51.6%",p:["Graphs","BFS","Shortest Path"]},
+  {n:1202,t:"Smallest String With Swaps",r:"60.7%",p:["Graphs","Union Find"]},
+  {n:1254,t:"Number of Closed Islands",r:"67.1%",p:["Graphs","DFS","BFS"]},
+  {n:1267,t:"Count Servers that Communicate",r:"73.5%",p:["Graphs","DFS","Union Find"]},
+  {n:1319,t:"Number of Operations to Make Network Connected",r:"66.6%",p:["Graphs","Union Find"]},
+  {n:1334,t:"Find the City With the Smallest Number of Neighbors at a Threshold Distance",r:"72.9%",p:["Graphs","Shortest Path","Floyd-Warshall"]},
+  {n:1466,t:"Reorder Routes to Make All Paths Lead to the City Zero",r:"65.9%",p:["Graphs","DFS","BFS"]},
+  {n:1557,t:"Minimum Number of Vertices to Reach All Nodes",r:"81.6%",p:["Graphs","Topological Sort"]},
+  {n:1584,t:"Min Cost to Connect All Points",r:"71.0%",p:["Graphs","Minimum Spanning Tree","Prim","Kruskal"]},
+  {n:1631,t:"Path With Minimum Effort",r:"63.3%",p:["Graphs","Dijkstra","Binary Search","Union Find"]},
+  {n:1926,t:"Nearest Exit from Entrance in Maze",r:"48.6%",p:["Graphs","BFS"]},
+  {n:2101,t:"Detonate the Maximum Bombs",r:"50.2%",p:["Graphs","DFS","BFS"]},
+  {n:2316,t:"Count Unreachable Pairs of Nodes in an Undirected Graph",r:"50.0%",p:["Graphs","Union Find","DFS"]},
+  {n:2359,t:"Find Closest Node to Given Two Nodes",r:"53.0%",p:["Graphs","DFS"]},
+  {n:2421,t:"Number of Good Paths",r:"56.4%",p:["Graphs","Union Find","Sorting"]},
+  {n:2492,t:"Minimum Score of a Path Between Two Cities",r:"58.9%",p:["Graphs","Union Find","DFS"]},
+  {n:743,t:"Network Delay Time",r:"60.5%",p:["Graphs","Dijkstra","Shortest Path"]},
+  {n:1976,t:"Number of Ways to Arrive at Destination",r:"37.5%",p:["Graphs","Dijkstra","Dynamic Programming"]},
+  {n:2642,t:"Design Graph With Shortest Path Calculator",r:"65.2%",p:["Graphs","Dijkstra","Design"]},
+
+  // DYNAMIC PROGRAMMING - 1D
+  {n:53,t:"Maximum Subarray",r:"53.4%",p:["Dynamic Programming","Kadane's Algorithm"]},
+  {n:55,t:"Jump Game",r:"41.0%",p:["Dynamic Programming","Greedy"]},
+  {n:45,t:"Jump Game II",r:"42.9%",p:["Dynamic Programming","Greedy"]},
+  {n:91,t:"Decode Ways",r:"38.0%",p:["Dynamic Programming"]},
+  {n:139,t:"Word Break",r:"49.5%",p:["Dynamic Programming","Trie"]},
+  {n:152,t:"Maximum Product Subarray",r:"36.5%",p:["Dynamic Programming"]},
+  {n:198,t:"House Robber",r:"53.3%",p:["Dynamic Programming"]},
+  {n:213,t:"House Robber II",r:"45.0%",p:["Dynamic Programming"]},
+  {n:279,t:"Perfect Squares",r:"56.6%",p:["Dynamic Programming","BFS"]},
+  {n:300,t:"Longest Increasing Subsequence",r:"59.5%",p:["Dynamic Programming","Binary Search"]},
+  {n:309,t:"Best Time to Buy and Sell Stock with Cooldown",r:"62.1%",p:["Dynamic Programming"]},
+  {n:322,t:"Coin Change",r:"48.5%",p:["Dynamic Programming"]},
+  {n:337,t:"House Robber III",r:"55.9%",p:["Dynamic Programming","Trees","DFS"]},
+  {n:343,t:"Integer Break",r:"62.3%",p:["Dynamic Programming","Math"]},
+  {n:368,t:"Largest Divisible Subset",r:"49.7%",p:["Dynamic Programming","Sorting"]},
+  {n:416,t:"Partition Equal Subset Sum",r:"49.5%",p:["Dynamic Programming","Knapsack"]},
+  {n:494,t:"Target Sum",r:"52.3%",p:["Dynamic Programming","Backtracking"]},
+  {n:516,t:"Longest Palindromic Subsequence",r:"65.4%",p:["Dynamic Programming"]},
+  {n:518,t:"Coin Change II",r:"60.0%",p:["Dynamic Programming","Knapsack"]},
+  {n:583,t:"Delete Operation for Two Strings",r:"65.7%",p:["Dynamic Programming","LCS"]},
+  {n:646,t:"Maximum Length of Pair Chain",r:"61.8%",p:["Dynamic Programming","Greedy"]},
+  {n:647,t:"Palindromic Substrings",r:"72.8%",p:["Dynamic Programming","Two Pointers"]},
+  {n:673,t:"Number of Longest Increasing Subsequence",r:"52.0%",p:["Dynamic Programming"]},
+  {n:712,t:"Minimum ASCII Delete Sum for Two Strings",r:"71.0%",p:["Dynamic Programming","LCS"]},
+  {n:714,t:"Best Time to Buy and Sell Stock with Transaction Fee",r:"72.0%",p:["Dynamic Programming","Greedy"]},
+  {n:790,t:"Domino and Tromino Tiling",r:"51.3%",p:["Dynamic Programming"]},
+  {n:799,t:"Champagne Tower",r:"64.1%",p:["Dynamic Programming"]},
+  {n:808,t:"Soup Servings",r:"59.6%",p:["Dynamic Programming"]},
+  {n:873,t:"Length of Longest Fibonacci Subsequence",r:"57.5%",p:["Dynamic Programming","Hash Map"]},
+  {n:931,t:"Minimum Falling Path Sum",r:"60.8%",p:["Dynamic Programming"]},
+  {n:983,t:"Minimum Cost For Tickets",r:"67.4%",p:["Dynamic Programming"]},
+  {n:1014,t:"Best Sightseeing Pair",r:"62.7%",p:["Dynamic Programming"]},
+  {n:1035,t:"Uncrossed Lines",r:"65.3%",p:["Dynamic Programming","LCS"]},
+  {n:1048,t:"Longest String Chain",r:"63.1%",p:["Dynamic Programming","Sorting"]},
+  {n:1140,t:"Stone Game II",r:"72.8%",p:["Dynamic Programming","Game Theory"]},
+  {n:1143,t:"Longest Common Subsequence",r:"59.2%",p:["Dynamic Programming","LCS"]},
+  {n:1218,t:"Longest Arithmetic Subsequence of Given Difference",r:"54.3%",p:["Dynamic Programming","Hash Map"]},
+  {n:1262,t:"Greatest Sum Divisible by Three",r:"57.0%",p:["Dynamic Programming"]},
+  {n:1406,t:"Stone Game III",r:"63.3%",p:["Dynamic Programming","Game Theory"]},
+  {n:1423,t:"Maximum Points You Can Obtain from Cards",r:"57.7%",p:["Dynamic Programming","Sliding Window"]},
+  {n:1594,t:"Maximum Non Negative Product in a Matrix",r:"51.6%",p:["Dynamic Programming"]},
+  {n:1647,t:"Minimum Deletions to Make Character Frequencies Unique",r:"61.5%",p:["Dynamic Programming","Greedy"]},
+  {n:1653,t:"Minimum Deletions to Make String Balanced",r:"68.2%",p:["Dynamic Programming","Stack"]},
+  {n:1674,t:"Minimum Moves to Make Array Complementary",r:"65.0%",p:["Dynamic Programming","Difference Array"]},
+  {n:1749,t:"Maximum Absolute Sum of Any Subarray",r:"71.0%",p:["Dynamic Programming","Kadane's Algorithm"]}
+],
+hard: [
+  // HARD PROBLEMS REFERENCE LIST
+  {n:4,t:"Median of Two Sorted Arrays",r:"40.2%",p:["Arrays & Hashing","Binary Search","Divide & Conquer"]},
+  {n:10,t:"Regular Expression Matching",r:"28.4%",p:["Dynamic Programming","String"]},
+  {n:23,t:"Merge k Sorted Lists",r:"53.8%",p:["Linked List","Heap","Divide & Conquer"]},
+  {n:25,t:"Reverse Nodes in k-Group",r:"59.1%",p:["Linked List"]},
+  {n:30,t:"Substring with Concatenation of All Words",r:"32.1%",p:["Sliding Window","Hash Map"]},
+  {n:32,t:"Longest Valid Parentheses",r:"34.8%",p:["Stack","Dynamic Programming"]},
+  {n:41,t:"First Missing Positive",r:"39.4%",p:["Arrays & Hashing"]},
+  {n:42,t:"Trapping Rain Water",r:"62.1%",p:["Two Pointers","Stack","Monotonic Stack"]},
+  {n:51,t:"N-Queens",r:"68.2%",p:["Backtracking"]},
+  {n:52,t:"N-Queens II",r:"74.1%",p:["Backtracking"]},
+  {n:72,t:"Edit Distance",r:"57.2%",p:["Dynamic Programming"]},
+  {n:76,t:"Minimum Window Substring",r:"43.1%",p:["Sliding Window","Hash Map"]},
+  {n:84,t:"Largest Rectangle in Histogram",r:"44.9%",p:["Stack","Monotonic Stack"]},
+  {n:85,t:"Maximal Rectangle",r:"47.3%",p:["Stack","Monotonic Stack","Dynamic Programming"]},
+  {n:87,t:"Scramble String",r:"40.2%",p:["Dynamic Programming"]},
+  {n:115,t:"Distinct Subsequences",r:"46.8%",p:["Dynamic Programming"]},
+  {n:123,t:"Best Time to Buy and Sell Stock III",r:"48.2%",p:["Dynamic Programming"]},
+  {n:124,t:"Binary Tree Maximum Path Sum",r:"39.9%",p:["Trees","DFS"]},
+  {n:127,t:"Word Ladder",r:"39.1%",p:["Graphs","BFS"]},
+  {n:132,t:"Palindrome Partitioning II",r:"34.3%",p:["Dynamic Programming"]},
+  {n:149,t:"Max Points on a Line",r:"37.8%",p:["Math","Hash Map"]},
+  {n:154,t:"Find Minimum in Rotated Sorted Array Ill",r:"43.5%",p:["Binary Search"]},
+  {n:188,t:"Best Time to Buy and Sell Stock IV",r:"44.1%",p:["Dynamic Programming"]},
+  {n:212,t:"Word Search II",r:"36.4%",p:["Trie","Backtracking","DFS"]},
+  {n:214,t:"Shortest Palindrome",r:"34.8%",p:["String","KMP"]},
+  {n:218,t:"The Skyline Problem",r:"42.7%",p:["Heap","Segment Tree","Binary Indexed Tree"]},
+  {n:224,t:"Basic Calculator",r:"44.1%",p:["Stack","Math"]},
+  {n:233,t:"Number of Digit One",r:"34.5%",p:["Math","Dynamic Programming"]},
+  {n:239,t:"Sliding Window Maximum",r:"46.8%",p:["Sliding Window","Monotonic Queue","Heap"]},
+  {n:269,t:"Alien Dictionary",r:"35.9%",p:["Graphs","Topological Sort"]},
+  {n:273,t:"Integer to English Words",r:"32.1%",p:["Math","String"]},
+  {n:295,t:"Find Median from Data Stream",r:"51.9%",p:["Heap","Design"]},
+  {n:297,t:"Serialize and Deserialize Binary Tree",r:"57.1%",p:["Trees","Design"]},
+  {n:301,t:"Remove Invalid Parentheses",r:"48.2%",p:["BFS","Backtracking"]},
+  {n:312,t:"Burst Balloons",r:"58.2%",p:["Dynamic Programming"]},
+  {n:315,t:"Count of Smaller Numbers After Self",r:"43.1%",p:["Segment Tree","Binary Indexed Tree","Merge Sort"]},
+  {n:327,t:"Count of Range Sum",r:"36.2%",p:["Segment Tree","Binary Indexed Tree","Merge Sort"]},
+  {n:329,t:"Longest Increasing Path in a Matrix",r:"54.3%",p:["Dynamic Programming","Graphs","DFS"]},
+  {n:332,t:"Reconstruct Itinerary",r:"42.8%",p:["Graphs","Eulerian Circuit","DFS"]},
+  {n:335,t:"Self Crossing",r:"30.5%",p:["Math"]},
+  {n:354,t:"Russian Doll Envelopes",r:"38.5%",p:["Dynamic Programming","Binary Search"]},
+  {n:363,t:"Max Sum of Rectangle No Larger Than K",r:"44.2%",p:["Matrix","Binary Search"]},
+  {n:381,t:"Insert Delete GetRandom O(1) - Duplicates allowed",r:"35.8%",p:["Design","Hash Map"]},
+  {n:391,t:"Perfect Rectangle",r:"33.5%",p:["Matrix"]},
+  {n:403,t:"Frog Jump",r:"45.9%",p:["Dynamic Programming"]},
+  {n:407,t:"Trapping Rain Water II",r:"49.1%",p:["Heap","BFS","Matrix"]},
+  {n:410,t:"Split Array Largest Sum",r:"55.9%",p:["Binary Search","Greedy"]},
+  {n:420,t:"Strong Password Checker",r:"35.1%",p:["String"]},
+  {n:432,t:"All O`one Data Structure",r:"37.9%",p:["Design","Linked List","Hash Map"]},
+  {n:440,t:"K-th Smallest in Lexicographical Order",r:"35.2%",p:["Trie","Math"]},
+  {n:446,t:"Arithmetic Slices II - Subsequence",r:"55.1%",p:["Dynamic Programming"]},
+  {n:460,t:"LFU Cache",r:"44.9%",p:["Design","Linked List","Hash Map"]},
+  {n:466,t:"Count The Repetitions",r:"30.1%",p:["Dynamic Programming"]},
+  {n:472,t:"Concatenated Words",r:"49.5%",p:["Trie","Dynamic Programming"]},
+  {n:480,t:"Sliding Window Median",r:"41.2%",p:["Sliding Window","Heap"]},
+  {n:483,t:"Smallest Good Base",r:"38.2%",p:["Math","Binary Search"]},
+  {n:488,t:"Zuma Game",r:"44.5%",p:["BFS","Backtracking"]},
+  {n:493,t:"Reverse Pairs",r:"32.5%",p:["Segment Tree","Merge Sort"]},
+  {n:502,t:"IPO",r:"50.1%",p:["Heap","Greedy"]},
+  {n:514,t:"Freedom Trail",r:"52.8%",p:["Dynamic Programming"]},
+  {n:517,t:"Super Washing Machines",r:"41.1%",p:["Greedy"]},
+  {n:552,t:"Student Attendance Record II",r:"45.9%",p:["Dynamic Programming"]},
+  {n:564,t:"Find the Closest Palindrome",r:"22.8%",p:["Math","String"]},
+  {n:587,t:"Erect the Fence",r:"52.1%",p:["Math","Geometry"]},
+  {n:600,t:"Non-negative Integers without Consecutive Ones",r:"40.8%",p:["Dynamic Programming","Bit Manipulation"]},
+  {n:629,t:"K Inverse Pairs Array",r:"45.2%",p:["Dynamic Programming"]},
+  {n:630,t:"Course Schedule III",r:"40.1%",p:["Heap","Greedy"]},
+  {n:632,t:"Smallest Range Covering Elements from K Lists",r:"63.2%",p:["Heap","Sliding Window"]},
+  {n:639,t:"Decode Ways II",r:"30.8%",p:["Dynamic Programming"]},
+  {n:642,t:"Design Search Autocomplete System",r:"51.1%",p:["Design","Trie"]},
+  {n:664,t:"Strange Printer",r:"53.5%",p:["Dynamic Programming"]},
+  {n:668,t:"Kth Smallest Number in Multiplication Table",r:"51.9%",p:["Binary Search"]},
+  {n:675,t:"Cut Off Trees for Golf Event",r:"34.5%",p:["Graphs","BFS"]},
+  {n:679,t:"24 Game",r:"49.8%",p:["Backtracking","Math"]},
+  {n:685,t:"Redundant Connection II",r:"36.1%",p:["Graphs","Union Find","DFS"]},
+  {n:689,t:"Maximum Sum of 3 Non-Overlapping Subarrays",r:"50.2%",p:["Dynamic Programming"]},
+  {n:691,t:"Stickers to Spell Word",r:"47.5%",p:["Dynamic Programming","Bitmask"]},
+  {n:699,t:"Falling Squares",r:"44.1%",p:["Segment Tree"]},
+  {n:710,t:"Random Pick with Blacklist",r:"34.1%",p:["Binary Search","Hash Map"]},
+  {n:711,t:"Number of Distinct Islands II",r:"51.2%",p:["Graphs","DFS"]},
+  {n:715,t:"Range Module",r:"44.1%",p:["Segment Tree","Design"]},
+  {n:719,t:"Find K-th Smallest Pair Distance",r:"38.5%",p:["Binary Search"]},
+  {n:726,t:"Number of Atoms",r:"56.2%",p:["Stack","Hash Map"]},
+  {n:727,t:"Minimum Window Subsequence",r:"43.9%",p:["Dynamic Programming","Sliding Window"]},
+  {n:730,t:"Count Different Palindromic Subsequences",r:"44.9%",p:["Dynamic Programming"]},
+  {n:732,t:"My Calendar III",r:"72.1%",p:["Segment Tree"]},
+  {n:736,t:"Parse Lisp Expression",r:"52.5%",p:["Stack","Recursion"]},
+  {n:741,t:"Cherry Pickup",r:"36.8%",p:["Dynamic Programming"]},
+  {n:745,t:"Prefix and Suffix Search",r:"41.1%",p:["Trie","Design"]},
+  {n:749,t:"Contain Virus",r:"50.1%",p:["Graphs","DFS"]},
+  {n:753,t:"Cracking the Safe",r:"56.8%",p:["Graphs","Eulerian Circuit"]},
+  {n:757,t:"Set Intersection Size At Least Two",r:"44.8%",p:["Greedy"]},
+  {n:761,t:"Special Binary String",r:"61.1%",p:["String","Recursion"]},
+  {n:765,t:"Couples Holding Hands",r:"56.5%",p:["Graphs","Union Find","Greedy"]},
+  {n:768,t:"Max Chunks To Make Sorted II",r:"52.9%",p:["Stack","Monotonic Stack"]},
+  {n:770,t:"Basic Calculator IV",r:"56.5%",p:["Stack","Design","Hash Map"]},
+  {n:773,t:"Sliding Puzzle",r:"66.2%",p:["Graphs","BFS"]},
+  {n:778,t:"Swim in Rising Water",r:"60.5%",p:["Graphs","Dijkstra","Union Find","Binary Search"]},
+  {n:780,t:"Reaching Points",r:"33.5%",p:["Math"]},
+  {n:782,t:"Transform to Chessboard",r:"54.1%",p:["Matrix"]},
+  {n:793,t:"Preimage Size of Factorial Zeroes Function",r:"44.9%",p:["Math","Binary Search"]}
+]
+};
+
+// ===================== ENGINE SYNCHRONIZATION CONTROLLER =====================
+let STATUS_MATRIX = JSON.parse(localStorage.getItem('karma_sheet_sync_data')) || {};
+
+function updateStatus(diff, index, state) {
+  const problem = PROBLEMS[diff][index];
+  const currentKey = `${diff}_${problem.n}`;
+  
+  if (STATUS_MATRIX[currentKey] === state) {
+    delete STATUS_MATRIX[currentKey];
+  } else {
+    STATUS_MATRIX[currentKey] = state;
+  }
+  
+  localStorage.setItem('karma_sheet_sync_data', JSON.stringify(STATUS_MATRIX));
+  calculateRealtimeMetrics();
+  
+  if (document.getElementById('tab-medium').classList.contains('active')) {
+    renderPatternTrack('medium');
+  } else if (document.getElementById('tab-hard').classList.contains('active')) {
+    renderPatternTrack('hard');
+  } else if (document.getElementById('tab-all').classList.contains('active')) {
+    renderOverviewTrack();
+  } else if (document.getElementById('tab-ds').classList.contains('active')) {
+    renderDSTrack();
+  }
+}
+
+function calculateRealtimeMetrics() {
+  let done = 0, revise = 0;
+  for (let key in STATUS_MATRIX) {
+    if (STATUS_MATRIX[key] === 'done') done++;
+    if (STATUS_MATRIX[key] === 'revise') revise++;
+  }
+  
+  document.getElementById('globalDone').innerText = done;
+  document.getElementById('globalRevise').innerText = revise;
+  
+  const ovDone = document.getElementById('ov-done');
+  const ovRevise = document.getElementById('ov-revise');
+  const ovTodo = document.getElementById('ov-todo');
+  
+  if (ovDone) ovDone.innerText = done;
+  if (ovRevise) ovRevise.innerText = revise;
+  if (ovTodo) ovTodo.innerText = (608 - done);
+}
+
+function getProblemState(diff, num) {
+  return STATUS_MATRIX[`${diff}_${num}`] || 'todo';
+}
+
+// ===================== ENGINE PATTERN COMPILER =====================
+function compilePatterns(diff) {
+  const groups = {};
+  PROBLEMS[diff].forEach((prob, index) => {
+    prob.p.forEach(pat => {
+      if (!groups[pat]) groups[pat] = [];
+      groups[pat].push({ prob, originalIndex: index });
+    });
+  });
+  return groups;
+}
+
+// ===================== RUNTIME PATTERN VIEWS =====================
+let COLLAPSED_STATES = {};
+let RUNTIME_FILTERS = { medium: 'all', hard: 'all' };
+let SEARCH_QUERIES = { medium: '', hard: '' };
+
+function renderPatternTrack(diff) {
+  const container = document.getElementById(`${diff}-patterns`);
+  const patterns = compilePatterns(diff);
+  const filter = RUNTIME_FILTERS[diff];
+  const query = SEARCH_QUERIES[diff].toLowerCase();
+  
+  let html = [];
+  
+  for (let pat in patterns) {
+    let probs = patterns[pat];
+    
+    // Process matching pipelines
+    let filtered = probs.filter(({ prob }) => {
+      const state = getProblemState(diff, prob.n);
+      const matchesSearch = prob.t.toLowerCase().includes(query) || prob.n.toString().includes(query);
+      
+      if (filter === 'all') return matchesSearch;
+      return state === filter && matchesSearch;
+    });
+    
+    let totalDone = probs.filter(({ prob }) => getProblemState(diff, prob.n) === 'done').length;
+    let percent = probs.length ? Math.round((totalDone / probs.length) * 100) : 0;
+    
+    if (query && filtered.length === 0) continue;
+    if (filter !== 'all' && filtered.length === 0) continue;
+    
+    const gid = `${diff}_${pat.replace(/[^a-z0-9]/gi, '_')}`;
+    
+    // Set to true by default unless explicitly recorded as false by user interaction
+    if (COLLAPSED_STATES[gid] === undefined) {
+      COLLAPSED_STATES[gid] = true;
+    }
+    
+    const isCollapsed = COLLAPSED_STATES[gid] ? 'collapsed' : '';
+    
+    let rowsHtml = filtered.map(({ prob, originalIndex }) => {
+      const state = getProblemState(diff, prob.n);
+      return `<div class="problem-row">
+        <div class="prob-num">#${prob.n}</div>
+        <a class="prob-name" href="https://leetcode.com/problems/${prob.t.toLowerCase().replace(/[^a-z0-9]+/g, '-')}/" target="_blank">${prob.t}</a>
+        <div class="prob-diff ${diff === 'medium' ? 'Med' : 'Hard'}">${diff === 'medium' ? 'Med' : 'Hard'}</div>
+        <div class="prob-rate">${prob.r}</div>
+        <div class="status-btns">
+          <button class="status-btn ${state === 'todo' ? 'active-todo' : ''}" onclick="updateStatus('${diff}', ${originalIndex}, 'todo')">Todo</button>
+          <button class="status-btn ${state === 'done' ? 'active-done' : ''}" onclick="updateStatus('${diff}', ${originalIndex}, 'done')">Done</button>
+          <button class="status-btn ${state === 'revise' ? 'active-revise' : ''}" onclick="updateStatus('${diff}', ${originalIndex}, 'revise')">Revise</button>
+        </div>
+      </div>`;
+    }).join('');
+    
+    html.push(`
+      <div class="pattern-group ${isCollapsed}" id="${gid}">
+        <div class="pattern-header" onclick="toggleGroup('${gid}')">
+          <div class="pattern-name">${pat}</div>
+          <div class="pattern-tag">${filtered.length} Items</div>
+          <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" style="width: ${percent}%"></div></div>
+            <div class="progress-text">${percent}%</div>
+          </div>
+          <div class="chevron">▼</div>
+        </div>
+        <div class="problem-list">
+          ${rowsHtml}
+        </div>
+      </div>
+    `);
+  }
+  
+  container.innerHTML = html.length ? html.join('') : `<div class="empty-state"><span class="e-icon">🔍</span>No items found matching the filter criteria.</div>`;
+}
+
+function toggleGroup(id) {
+  const el = document.getElementById(id);
+  if (el.classList.contains('collapsed')) {
+    el.classList.remove('collapsed');
+    COLLAPSED_STATES[id] = false;
+  } else {
+    el.classList.add('collapsed');
+    COLLAPSED_STATES[id] = true;
+  }
+}
+
+function filterProblems(diff, mode, btn) {
+  btn.parentNode.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  RUNTIME_FILTERS[diff] = mode;
+  renderPatternTrack(diff);
+}
+
+function searchProblems(diff, val) {
+  SEARCH_QUERIES[diff] = val;
+  renderPatternTrack(diff);
+}
+
+// ===================== OVERVIEW GENERATOR ENGINE =====================
+function renderOverviewTrack() {
+  const cont = document.getElementById('pattern-summary');
+  const medPatterns = compilePatterns('medium');
+  const hardPatterns = compilePatterns('hard');
+  
+  let rows = [];
+  
+  const processGroup = (patterns, diff) => {
+    for (let pat in patterns) {
+      let probs = patterns[pat];
+      let done = probs.filter(({ prob }) => getProblemState(diff, prob.n) === 'done').length;
+      let pct = probs.length ? Math.round(done / probs.length * 100) : 0;
+      rows.push(`<div class="progress-row-summary">
+        <div class="prs-title">${pat} (${diff === 'medium' ? 'Med' : 'Hard'})</div>
+        <div class="prs-track">
+          <div class="prs-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="prs-counts">${done}/${probs.length}</div>
+        <div class="prs-pct">${pct}%</div>
+      </div>`);
+    }
+  };
+  
+  processGroup(medPatterns, 'medium');
+  processGroup(hardPatterns, 'hard');
+  cont.innerHTML = rows.join('');
+}
+
+// ===================== DATA STRUCTURE MODULE RENDERER =====================
+let CURRENT_DS_DIFFICULTY = 'all';
+
+function renderDSTrack() {
+  const grid = document.getElementById('ds-grid');
+  const medPatterns = compilePatterns('medium');
+  const hardPatterns = compilePatterns('hard');
+  
+  const allStructures = {};
+  
+  const extract = (patterns, diff) => {
+    for (let pat in patterns) {
+      if (CURRENT_DS_DIFFICULTY !== 'all' && CURRENT_DS_DIFFICULTY !== (diff === 'medium' ? 'Med' : 'Hard')) continue;
+      if (!allStructures[pat]) allStructures[pat] = [];
+      patterns[pat].forEach(item => {
+        allStructures[pat].push({ ...item.prob, diff: diff === 'medium' ? 'Med' : 'Hard' });
+      });
+    }
+  };
+  
+  extract(medPatterns, 'medium');
+  extract(hardPatterns, 'hard');
+  
+  let html = [];
+  for (let structure in allStructures) {
+    let list = allStructures[structure];
+    if (list.length === 0) continue;
+    
+    let probItems = list.map(p => `
+      <a class="ds-problem" href="https://leetcode.com/problems/${p.t.toLowerCase().replace(/[^a-z0-9]+/g, '-')}/" target="_blank">
+        <span class="ds-prob-num">#${p.n}</span>
+        <span class="ds-prob-name">${p.t}</span>
+        <span class="ds-prob-diff ${p.diff}">${p.diff}</span>
+      </a>
+    `).join('');
+    
+    html.push(`
+      <div class="ds-card">
+        <div class="ds-card-header">
+          <span class="ds-icon">🗂️</span>
+          <div class="ds-title">${structure}</div>
+          <div class="ds-count">${list.length} Probs</div>
+        </div>
+        <div class="ds-list">
+          ${probItems}
+        </div>
+      </div>
+    `);
+  }
+  
+  grid.innerHTML = html.join('');
+}
+
+function filterDS(mode, btn) {
+  btn.parentNode.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  CURRENT_DS_DIFFICULTY = mode;
+  renderDSTrack();
+}
+
+// ===================== SYSTEM TAB LAYER ROUTER =====================
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabBtn = document.querySelector(`.tab.${name}-tab`) || event.currentTarget;
+  if (tabBtn) tabBtn.classList.add('active');
+  
+  if (name === 'medium') renderPatternTrack('medium');
+  if (name === 'hard') renderPatternTrack('hard');
+  if (name === 'all') renderOverviewTrack();
+  if (name === 'ds') renderDSTrack();
+}
+
+// Initial System Launch Vector
+calculateRealtimeMetrics();
+renderOverviewTrack();
+</script>
+</body>
+</html>
